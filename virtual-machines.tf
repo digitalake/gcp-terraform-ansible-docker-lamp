@@ -24,15 +24,7 @@ resource "google_compute_instance" "vm_instance_public" {
     }
   }
 
-    provisioner "local-exec" {
-      command = "ansible-playbook -i ansible/inventory/hosts.cfg -u ${var.ssh-user} --private-key ${var.ssh-private_key_path}  ansible/deploy-lamp.yml"
-    }
-  
-   connection {
-      type = "ssh"
-      host = google_compute_address.static.address
-      user = var.ssh-user
-      private_key = "${file(var.ssh-private_key_path)}"
-      agent = "false"
-    }
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ansible/inventory/hosts.cfg -u ${var.ssh-user} --private-key ${var.ssh-private_key_path}  ansible/deploy-lamp.yml"
+  }
 }
