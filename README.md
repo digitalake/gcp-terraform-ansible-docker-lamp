@@ -61,7 +61,12 @@ So, in details, it works like this:
     
 ### Useful links ###
 [Learn about Docker-compose](https://docs.docker.com/compose/)
+
 [Learn about Terraform for GCP](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
+
+[Ansible Docs](https://docs.ansible.com/)
+
+[GCP concepts](https://cloud.google.com/docs)
     
       
       
