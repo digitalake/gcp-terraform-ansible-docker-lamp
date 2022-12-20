@@ -1,0 +1,55 @@
+---
+  - name: Docker-setuper
+    hosts: all
+    become: true
+
+    tasks:
+    - name: Add Docker GPG apt Key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Print Ansible lsb_release
+      ansible.builtin.debug:
+        msg: "{{ ansible_distribution_release }}"
+
+    - name: Add Docker Repository
+      ansible.builtin.apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu "{{ ansible_distribution_release }}" stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      ansible.builtin.apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: create group
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Adding existing user ansible_user to Docker group
+      ansible.builtin.user:
+        name: "{{ansible_user}}"
+        groups: docker
+        append: true
+
+    - name: Install docker-compose from official github repo
+      get_url:
+        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+
+    - name: Ansible copy directory to the remote server
+      ansible.builtin.copy:
+        src: ~/terraform/terraform-gcp/docker-compose/
+        dest: /home/weber/docker-compose/
+        owner: weber
+        group: weber
+        mode: '0644'
+
+    - name: Change the working directory to somedir/ before executing the command
+      ansible.builtin.shell: docker-compose --env-file .env up -d
+      args:
+        chdir: /home/weber/docker-compose/

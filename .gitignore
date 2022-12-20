@@ -1,0 +1,8 @@
+*.env
+.terraform/plugins
+.terraform/modules
+.terraform/providers
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
+*.tfvars
