@@ -1,4 +1,5 @@
 # GCP-Terraform-Ansible-Docker-LAMP
+### [Web-server ip](http://34.116.154.153:80) 
 ### Overal info ###
 Hi there!
 In this repo u can find my solution to deploy web-server-db-satak using interesting tools:
